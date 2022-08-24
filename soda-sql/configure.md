@@ -1,11 +1,15 @@
 ---
 layout: default
 title: Configure Soda SQL
+description: After you install Soda SQL, you must create files and configure a few settings before you can run a scan. Access an Overview of configuration details.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/getting-started/configure.html
 ---
 
 # Configure Soda SQL
+
+{% include banner-sql.md %}
 
 After you [install Soda SQL]({% link soda-sql/installation.md %}), you must create files and configure a few settings before you can run a scan.
 
@@ -16,7 +20,7 @@ After you [install Soda SQL]({% link soda-sql/installation.md %}), you must crea
 3. Get Soda SQL to discover all the [datasets]({% link soda/glossary.md %}#dataset) in your data source and create a [scan YAML file]({% link soda/glossary.md %}#scan-yaml) for each dataset. The scan YAML files store the test criteria that Soda SQL uses to prepare SQL queries that [scan]({% link soda/glossary.md %}#scan) your data source.
 4. Adjust the contents of your new scan YAML files to add the [tests]({% link soda/glossary.md %}#test) you want to run on your data to check for quality.
 
-Consider following the [Quick start tutorial]({% link soda-sql/5_min_tutorial.md %}) that guides you through configuration and scanning.
+Consider following the [Quick start tutorial]({% link soda-sql/quick-start-soda-sql.md %}) that guides you through configuration and scanning.
 
 ## Configuration instructions
 
@@ -34,7 +38,7 @@ Use `soda create --help` for a list of all available data source types and optio
 ```shell
 $ soda create warehousetype -d yourdbname -u dbusername -w soda_warehouse_directory 
 ```
-3. Use a code editor to open the `warehouse.yml` file that Soda SQL created and put in your warehouse directory. Refer to [Datasource configuration]({% link soda/warehouse_types.md %}) to adjust the configuration details and authentication settings according to the type of data source you use, then save the file.<br />
+3. Use a code editor to open the `warehouse.yml` file that Soda SQL created and put in your warehouse directory. Refer to [Datasource configuration]({% link soda-sql/warehouse_types.md %}) to adjust the configuration details and authentication settings according to the type of data source you use, then save the file.<br />
 <br />
 Example warehouse YAML
 ```yaml
@@ -63,11 +67,11 @@ soda analyze
 6. Use a code editor to open one of your new scan YAML files. Soda SQL pre-populated the YAML file with built-in metrics and tests that it deemed useful for the kind of data in the dataset. See [scan YAML]({% link soda-sql/scan-yaml.md %}#anatomy-of-the-scan-yaml-file). <br /> Adjust the contents of the YAML file to define the tests that you want Soda SQL to conduct when it runs a scan on this dataset in your data source. Refer to [Metrics]({% link soda-sql/sql_metrics.md %}) and [Tests]({% link soda-sql/tests.md %}) for details. <br />
 <br />
 ![configure yaml](/assets/images/configure-yaml.png){:height="275px" width="275px"}
-7. With your configuration complete, [run your first scan]({% link soda/scan.md %}#run-a-scan-in-soda-sql).
+7. With your configuration complete, [run your first scan]({% link soda-sql/scan.md %}#run-a-scan-in-soda-sql).
 
 #### Troubleshoot
 
-If, when you run `soda analyze` you get an an authentication error, check to see if you have another instance of postgres already running on port 5432. If so, try stopping or uninstalling the postgres instance, then run `soda analyze` again. 
+{% include troubleshoot-soda-analyze.md %}
 
 ## Create commands
 
@@ -100,17 +104,15 @@ If you wish, you can define options for the `soda analyze` command that allow yo
 
 ## Go further
 
-* Next, [run a scan]({% link soda/scan.md %}#run-a-scan-in-soda-sql) on the data in your data source.
+* Next, [run a scan]({% link soda-sql/scan.md %}#run-a-scan-in-soda-sql) on the data in your data source.
 * Learn more about the [scan YAML file]({% link soda-sql/scan-yaml.md %}).
 * Learn more about the [warehouse YAML file]({% link soda-sql/warehouse.md %}).
 * Soda collects anonymous Soda SQL usage statistics. Learn more about the [information]({% link soda-sql/global-configuration.md %}) Soda collects.
 * Learn more about [How Soda SQL works]({% link soda-sql/concepts.md %}).
 * Learn more about configuring [tests]({% link soda-sql/tests.md %}) and [metrics]({% link soda-sql/sql_metrics.md %}).
-* Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
+
 
 <br />
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

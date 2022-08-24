@@ -1,13 +1,17 @@
 ---
 layout: default
 title: Send sample data
-parent: Soda Cloud
+description: In Soda Cloud, you may find it useful to review sample data from your dataset to help you determine the kinds of tests to run when Soda SQL scans your data.
+sidebar: sql
+parent: Soda SQL
 redirect_from:
 - /soda-sql/documentation/samples.html
 - /soda-cloud/samples.html
 ---
 
 # Send sample data to Soda Cloud
+
+{% include banner-sql.md %}
 
 When creating new [monitors]({% link soda/glossary.md %}#monitor) in Soda Cloud, you may find it useful to review sample data from your [dataset]({% link soda/glossary.md %}#dataset) to help you determine the kinds of [tests]({% link soda-sql/tests.md %}) to run when Soda SQL scans your data; see the image below. For this reason, you may wish to configure a `samples` [configuration key]({% link soda-sql/scan-yaml.md %}#scan-yaml-table-configuration-keys) in Soda SQL.
 
@@ -27,7 +31,7 @@ Where your datasets contain sensitive or private information, you may *not* want
 {% include disable-all-samples.md %}
 
 Alternatively, you can prevent Soda SQL from sending metadata or samples to Soda Cloud by using one of the following methods:
-* To prevent Soda SQL from sending an individual dataset's scan results or samples to Soda Cloud, use the [`--offline` option]({% link soda/scan.md %}#add-scan-options) when you run a scan.
+* To prevent Soda SQL from sending an individual dataset's scan results or samples to Soda Cloud, use the [`--offline` option]({% link soda-sql/scan.md %}#add-scan-options) when you run a scan.
 * To prevent Soda SQL from sending specific column scan results or samples, configure an [`excluded_columns` configuration key]({% link soda-sql/scan-yaml.md %}#scan-yaml-table-configuration-keys) in your scan YAML file.
 
 ### Reroute sample data for a dataset
@@ -154,7 +158,6 @@ scan_builder.sample_processor = BigQuerySampleProcessor()
 
 - Read more about [failed row]({% link soda-cloud/failed-rows.md %}) samples in Soda Cloud.
 - <a href="https://cloud.soda.io/signup" target="_blank"> Sign up</a> for a Soda Cloud account.
-- [Create monitors]({% link soda-cloud/monitors.md %}) in Soda Cloud.
 - Learn more about [Soda Cloud architecture]({% link soda-cloud/soda-cloud-architecture.md %}).
 - Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
 
@@ -162,5 +165,3 @@ scan_builder.sample_processor = BigQuerySampleProcessor()
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

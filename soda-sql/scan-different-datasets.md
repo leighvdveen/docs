@@ -1,15 +1,19 @@
 ---
 layout: default
 title: Scan multiple data sources or datasets
+description: You can run a single scan against different data sources in your environments. You can also run a single scan against different datasets using custom metrics.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/documentation/scan-different-datasets.html
 ---
 
 # Scan multiple data sources or datasets
 
-You can run a single [scan]({% link soda/glossary.md %}#scan %}) against different [data sources]({% link soda/glossary.md %}#data-source) in your environments. For example, you can run the same scan against data in a development environment and data in a production environment.
+{% include banner-sql.md %}
 
-You can also run a single scan against different [datasets]({% link soda/glossary.md %}#dataset %}) in your data source using [custom metrics]({% link soda/glossary.md %}#custom-metric). 
+You can run a single [scan]({% link soda/glossary.md %}#scan) against different [data sources]({% link soda/glossary.md %}#data-source) in your environments. For example, you can run the same scan against data in a development environment and data in a production environment.
+
+You can also run a single scan against different [datasets]({% link soda/glossary.md %}#dataset) in your data source using [custom metrics]({% link soda/glossary.md %}#custom-metric). 
 
 ## Run a basic scan
 
@@ -62,13 +66,11 @@ Prepare one [scan YAML file]({% link soda-sql/scan-yaml.md %}) to define the tes
 
 * See [Example tests by metric]({% link soda-sql/examples-by-metric.md %}) to learn more about defining tests.
 * Learn [How Soda SQL works]({% link soda-sql/concepts.md %}).
-* Learn more about [Metrics]({% link soda/metrics.md %}).
+* Learn more about [Metrics]({% link soda-sql/metrics.md %}).
 * Learn how to [apply dynamic filters]({% link soda-sql/filtering.md %}) to your scan.
-* Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
+
 
 <br />
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

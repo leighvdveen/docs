@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Collaborate on data monitoring
+description: Data quality is a team sport! Integrate with Slack so Soda Cloud can send alerts to your team. Invite your team to join your Soda Cloud account.
 parent: Soda Cloud
 redirect_from:
   - /soda-sql/documentation/integrate-slack.html
@@ -25,7 +26,7 @@ When your team members receive the invitation email, they can click the link in 
 
 Note that if your organization uses a single sign-on (SSO) identity provider to access Soda Cloud, you cannot invite team members in Soda Cloud. Instead, contact your IT Admin to request access to Soda Cloud using your SSO. See also, [Single Sign-on with Soda Cloud]({% link soda-cloud/sso.md %}).
 
-## Share test results
+## Share test results and filtered views
 
 Collaborating as a team on Soda Cloud means you can quickly share the lastest test results for a dataset with others.
 
@@ -44,13 +45,20 @@ If you have integrated your Soda Cloud account with a Slack workspace, you can u
 
 ## Go further
 
-* [Connect]({% link soda-cloud/connect_to_cloud.md %}) Soda SQL to your Soda Cloud account.
-* [Create an alert]({% link soda-cloud/monitors.md %}) to send Slack notifications when a scan surfaces a data issue.
+* Share a [filtered view of your datasets]({% link soda-cloud/organize-datasets.md %}) with colleagues by sharing the URL of your narrowed search. 
+* [Connect]({% link soda-core/connect-core-to-cloud.md %}) Soda Core to your Soda Cloud account.
+* [Organize your datasets]({% link soda-cloud/organize-datasets.md %}) in Soda Cloud to facilitate your search for the right data.
 * Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
 
 <br />
 
 ---
-*Last modified on {% last_modified_at %}*
 
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.
+Was this documentation helpful?
+
+<!-- LikeBtn.com BEGIN -->
+<span class="likebtn-wrapper" data-theme="tick" data-i18n_like="Yes" data-ef_voting="grow" data-show_dislike_label="true" data-counter_zero_show="true" data-i18n_dislike="No"></span>
+<script>(function(d,e,s){if(d.getElementById("likebtn_wjs"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="likebtn_wjs";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","//w.likebtn.com/js/w/widget.js");</script>
+<!-- LikeBtn.com END -->
+
+{% include docs-footer.md %}

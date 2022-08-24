@@ -1,11 +1,15 @@
 ---
 layout: default
-title: Anonymous usage statistics
-parent: Reference
+title: Soda SQL usage statistics
+description: To understand how users are using Soda SQL, the Soda dev team has added telemetry event tracking to Soda SQL. See instructions to opt-out.
+sidebar: sql
+parent: Soda SQL
 redirect_from: /soda-sql/documentation/config.html
 ---
 
-# Anonymous usage statistics
+# Soda SQL usage statistics
+
+{% include banner-sql.md %}
 
 To understand how users are using Soda SQL, and to proactively capture bugs and performance issues, the Soda development team has added telemetry event tracking to Soda SQL. 
 
@@ -17,7 +21,7 @@ The table below lists the metrics and attributes that Soda currently tracks.
 
 | Attribute or metric      | Derivation and notes                                                                                                      |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| `user_cookie_id`         | uuid generated once and stored in `~/.soda/config.yaml`                                                                   |
+| `user_cookie_id`         | uuid generated once and stored in `~/.soda/config.yml`                                                                   |
 | `command_name`           | Soda SQL command or API method name                                                                                       |
 | `command_options`        | Soda SQL command or API method name                                                                                       |
 | `version`                | version of soda-sql                                                                                                       |
@@ -43,11 +47,9 @@ send_anonymous_usage_stats: false
 
 * Learn [How Soda SQL works]({% link soda-sql/concepts.md %}).
 * Learn more about the [Warehouse and env_vars YAML files]({% link soda-sql/warehouse.md %}).
-* Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
+
 
 <br />
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

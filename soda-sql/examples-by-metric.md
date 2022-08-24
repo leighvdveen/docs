@@ -1,11 +1,15 @@
 ---
 layout: default
 title: Example tests by metric
+description: Review examples for each built-in metric in Soda SQL. Copy + paste into your scan YAML to write tests for data quality.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/examples/examples-by-metric.html
 ---
 
 # Example tests by metric
+
+{% include banner-sql.md %}
 
 Refer to [Metrics]({% link soda-sql/sql_metrics.md %}) for configuration details for Soda SQL.<br />
 Refer to [Scan YAML]({% link soda-sql/scan-yaml.md %}#anatomy-of-the-scan-yaml-file) for details on the anatomy of a scan YAML file.
@@ -1328,5 +1332,3 @@ Scan output:
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

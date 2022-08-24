@@ -1,12 +1,15 @@
 ---
 layout: default
 title: Scan YAML
+description: Configure scan metrics and tests in a scan YAML file, then Soda SQL uses the input from that file to prepare and run SQL queries against your data.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/documentation/scan-yaml.html
 ---
 
-
 # Scan YAML
+
+{% include banner-sql.md %}
 
 A **scan** is a Soda SQL CLI command that uses SQL queries to extract information about data in a [dataset]({% link soda/glossary.md %}#dataset).
 
@@ -16,6 +19,7 @@ Instead of laboriously accessing your data source and then manually defining SQL
 [Create a scan YAML file](#create-a-scan-yaml-file)<br />
 [Anatomy of the scan YAML file](#anatomy-of-the-scan-yaml-file)<br />
 [Scan YAML table configuration keys](#scan-yaml-table-configuration-keys)<br />
+[Add a dataset name for Soda Cloud](#add-a-dataset-name-for-soda-cloud)<br />
 [Go further](#go-further)<br />
 
 ## Create a scan YAML file
@@ -125,20 +129,67 @@ columns:
       - invalid_percentage <= 3
 ```
 
+## Add a dataset name for Soda Cloud
+
+If you have [connected Soda SQL to your Soda Cloud account]({% link soda-sql/connect_to_cloud.md %}), you have the option of adding a `dataset_name` identifier to your scan YAML file. Soda SQL sends the value of this identifier to Soda Cloud along with any test results so that viewers in Soda Cloud can more precisely identify to which dataset the results pertain.
+
+Scan YAML:
+```yaml
+table_name: orders
+dataset_name: Orders in EMEA
+metrics:
+  - row_count
+  - missing_count
+  - missing_percentage
+  - ...
+tests:
+  - row_count > 0
+```
+
+Soda Cloud Datasets dashboard:
+
+![named-dataset2](/assets/images/named-dataset2.png){:height="700px" width="700px"}
+
+
+Soda Cloud Monitor info:
+
+![named-dataset1](/assets/images/named-dataset1.png){:height="600px" width="600px"}
+
+<br />
+Further, you can use a variable in the `dataset_name` identifier so that Soda SQL dynamically retrieves information from the `soda scan` command and uses it in the identifier. Include a variable in the `dataset_name` as in the example that follows, then use the `-v` option to provide a value for the variable at scan time. 
+
+Scan YAML:
+```yaml
+table_name: orders
+dataset_name: Orders in {% raw %}{{ region }}{% endraw %}
+metrics:
+  - row_count
+  - missing_count
+  - missing_percentage
+  - ...
+tests:
+  - row_count > 0
+```
+Scan command:
+```shell
+soda scan warehouse.yml tables/orders.yml -v region=APAC
+```
+
+Soda Cloud Datasets dashboard:
+
+![named-dataset3](/assets/images/named-dataset3.png){:height="700px" width="700px"}
 
 ## Go further
 
-* Next, [run a scan]({% link soda/scan.md %}#run-a-scan-in-soda-sql) on the data in your warehouse.
+* Next, [run a scan]({% link soda-sql/scan.md %}#run-a-scan-in-soda-sql) on the data in your warehouse.
 * Learn how to specify the datasets you wish to [include or exclude]({% link soda-sql/configure.md %}#add-analyze-options) during `soda anayze`.
 * Learn more about the [warehouse YAML]({% link soda-sql/warehouse.md %}) file.
 * Learn how to configure [metrics]({% link soda-sql/sql_metrics.md %}) in your YAML files.
 * Learn more about configuring [tests]({% link soda-sql/tests.md %}).
-* Reference the [Data types]({% link soda/supported-data-types.md %}) that Soda SQL supports when it scans columns.
-* Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
+* Reference the [Data types]({% link soda-sql/supported-data-types.md %}) that Soda SQL supports when it scans columns.
+
 
 <br />
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

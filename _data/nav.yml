@@ -1,78 +1,102 @@
 - title: Home
   page: index.html
+
 - title: Get started
-  page: soda-sql/interactive-demo.md
+  page: soda/core-interactive-demo.md
   subcategories:
-  - subtitle: Soda SQL interactive demo
-    page: soda-sql/interactive-demo.md
-  - subtitle: Quick start for Soda SQL
-    page: soda-sql/5_min_tutorial.md
-  - subtitle: Quick start for Soda Cloud
-    page: soda-cloud/quick-start.md
+  - subtitle: Soda Core Interactive demo
+    page: soda/core-interactive-demo.md
+  - subtitle: Quick start for Soda Core and Soda Cloud
+    page: soda/quick-start-soda-core.md
+  - subtitle: Quick start for SodaCL
+    page: soda/quick-start-sodacl.md
+  - subtitle: Quick start for Soda Cloud (Preview)
+    page: soda/quick-start-sodacloud.md
   - subtitle: Soda product overview
     page: soda/product-overview.md
+  - subtitle: Soda product comparison
+    page: soda/product-matrix.md
 
-- title: Concepts
-  page: soda/data-monitoring.md
-  subcategories:
-  - subtitle: Data quality
-    page: soda/data-monitoring.md
-  - subtitle: Scans
-    page: soda/scan.md
-  - subtitle: Metrics
-    page: soda/metrics.md
 
-- title: Soda SQL
-  page: soda-sql/overview.md
+- title: Soda Core 
+  page: soda-core/overview-main.md
   subcategories:
-  - subtitle: Soda SQL
-    page: soda-sql/overview.md
-  - subtitle: How Soda SQL works
-    page: soda-sql/concepts.md
-  - subtitle: Install Soda SQL
-    page: soda-sql/installation.md
-  - subtitle: Configure Soda SQL
-    page: soda-sql/configure.md
-  - subtitle: Soda SQL CLI commands
-    page: soda-sql/cli.md
-  - subtitle: Warehouse YAML
-    page: soda-sql/warehouse.md
-  - subtitle: Scan YAML
-    page: soda-sql/scan-yaml.md
-  - subtitle: Configure metrics
-    page: soda-sql/sql_metrics.md
-  - subtitle: Define tests
-    page: soda-sql/tests.md
-  - subtitle: Scan multiple data sources or datasets
-    page: soda-sql/scan-different-datasets.md
-  - subtitle: Apply filters
-    page: soda-sql/filtering.md
-  - subtitle: Configure programmatic scans
-    page: soda-sql/programmatic_scan.md
+  - subtitle: Soda Core overview
+    page: soda-core/overview-main.md
+  - subtitle: How Soda Core works
+    page: soda-core/how-core-works.md
+  - subtitle: Install Soda Core
+    page: soda-core/installation.md
+  - subtitle: Configure Soda Core
+    page: soda-core/configuration.md
+  - subtitle: Run a Soda Core scan
+    page: soda-core/scan-core.md
+  - subtitle: Migrate from Soda SQL
+    page: soda-core/migrate.md
+  - subtitle: Soda Core CLI commands
+    page: soda-core/cli-reference.md
+  - subtitle: Define programmatic scans
+    page: soda-core/programmatic.md
   - subtitle: Configure orchestrated scans
-    page: soda-sql/orchestrate_scans.md
+    page: soda-core/orchestrate-scans.md
   - subtitle: Connect to Soda Cloud
-    page: soda-cloud/connect_to_cloud.md
-  - subtitle: Send sample data to Soda Cloud
-    page: soda-sql/samples.md
-  - subtitle: Send failed rows to Soda Cloud
-    page: soda-sql/send-failed-rows.md
-  - subtitle: Example tests by metric
-    page: soda-sql/examples-by-metric.md
-  - subtitle: Example tests for missing values
-    page: soda-sql/example-test-missing.md
-  - subtitle: Example tests for unique values
-    page: soda-sql/example-test-unique.md
-  - subtitle: Example tests for valid values
-    page: soda-sql/example-test-valid.md
-  - subtitle: Custom metric templates
-    page: soda-sql/custom-metric-templates.md
+    page: soda-core/connect-core-to-cloud.md
 
-- title: Soda Spark
-  page: soda-spark/install-and-use.md
+- title: SodaCL 
+  page: soda-cl/soda-cl-overview.md
   subcategories:
-  - subtitle: Install and use Soda Spark
-    page: soda-spark/install-and-use.md
+  - subtitle: SodaCL overview
+    page: soda-cl/soda-cl-overview.md
+  - subtitle: Metrics and checks
+    page: soda-cl/metrics-and-checks.md
+  - subtitle: Optional check configurations
+    page: soda-cl/optional-config.md
+  - subtitle: Numeric metrics
+    page: soda-cl/numeric-metrics.md
+  - subtitle: Missing metrics
+    page: soda-cl/missing-metrics.md
+  - subtitle: Validity metrics
+    page: soda-cl/validity-metrics.md
+  - subtitle: Freshness checks
+    page: soda-cl/freshness.md
+  - subtitle: Schema checks
+    page: soda-cl/schema.md
+  - subtitle: Reference checks
+    page: soda-cl/reference.md
+  - subtitle: Cross checks
+    page: soda-cl/cross-row-checks.md
+  - subtitle: Anomaly score checks
+    page: soda-cl/anomaly-score.md
+  - subtitle: Distribution checks
+    page: soda-cl/distribution.md
+  - subtitle: User-defined checks
+    page: soda-cl/user-defined.md
+  - subtitle: Failed rows checks
+    page: soda-cl/failed-rows-checks.md
+  - subtitle: Automated monitoring checks
+    page: soda-cl/automated-monitoring.md
+  - subtitle: Filters and variables
+    page: soda-cl/filters.md
+  - subtitle: For each
+    page: soda-cl/for-each.md
+  - subtitle: Send profile info to Soda Cloud
+    page: soda-cl/profile.md
+  - subtitle: Send sample data to Soda Cloud
+    page: soda-cl/sample-datasets.md
+
+- title: Soda Agent
+  page: soda-agent/basics.md
+  subcategories:
+  - subtitle: Soda Agent basic concepts
+    page: soda-agent/basics.md
+  - subtitle: Deploy a Soda Agent
+    page: soda-agent/deploy.md
+  - subtitle: Soda Agent test deployment
+    page: soda-agent/test-deploy.md
+  - subtitle: Upgrade a Soda Agent
+    page: soda-agent/upgrade.md
+  - subtitle: Decommission a Soda Agent
+    page: soda-agent/delete.md
 
 - title: Soda Cloud
   page: soda-cloud/overview.md
@@ -81,18 +105,18 @@
     page: soda-cloud/overview.md
   - subtitle: Roles and rights
     page: soda-cloud/roles-and-rights.md
+  - subtitle: Create a data source
+    page: soda-cloud/add-datasource.md
+  - subtitle: Create an agreement
+    page: soda-cloud/agreements.md
   - subtitle: Collaborate on data monitoring
     page: soda-cloud/collaborate.md
-  - subtitle: Create monitors and alerts
-    page: soda-cloud/monitors.md
-  - subtitle: Display column metrics
-    page: soda-cloud/display-column-metrics.md
-  - subtitle: Display sample data
-    page: soda-cloud/display-samples.md
-  - subtitle: Detect anomalies
-    page: soda-cloud/anomaly-detection.md
-  - subtitle: Monitor schema evolution
-    page: soda-cloud/schema-evolution.md
+  - subtitle: Scan output
+    page: soda-cloud/scan-output.md
+  - subtitle: Edit checks
+    page: soda-cloud/edit-checks.md
+  - subtitle: Organize datasets
+    page: soda-cloud/organize-datasets.md
   - subtitle: Examine failed rows
     page: soda-cloud/failed-rows.md
   - subtitle: Create and track incidents
@@ -115,24 +139,22 @@
     page: soda/integrate-slack.md
 
 - title: Reference
-  page: soda/glossary.md
+  page: soda/data-concepts.md
   subcategories:
+  - subtitle: Data concepts
+    page: soda/data-concepts.md
   - subtitle: Glossary
     page: soda/glossary.md
   - subtitle: What's new in docs?
     page: soda/new-documentation.md
-  - subtitle: Data source configuration
-    page: soda/warehouse_types.md
-  - subtitle: Data types
-    page: soda/supported-data-types.md
-  - subtitle: Troubleshoot
-    page: soda/troubleshoot.md
   - subtitle: Data security and privacy
     page: soda/data-privacy.md
-  - subtitle: Anonymous usage statistics
-    page: soda-sql/global-configuration.md
+  - subtitle: Soda Core usage statistics
+    page: soda-core/usage-stats.md
   - subtitle: Support
     page: soda/support.md
+  - subtitle: Soda Community Code of Conduct
+    page: soda/community-coc.md
 
 - title: API Documentation
   page: api-docs/reporting-api.md
@@ -142,14 +164,17 @@
   - subtitle: Build a reporting dashboard
     page: api-docs/reporting-api-to-overview-dashboards.md
 
+
 - title: Release notes
   page: release-notes/all.md
   subcategories:
     - subtitle: Soda products
       page: release-notes/all.md
-    - subtitle: Soda SQL
-      page: release-notes/soda-sql.md
-    - subtitle: Soda Spark
-      page: release-notes/soda-spark.md
+    - subtitle: Soda Agent
+      page: release-notes/soda-agent.md
     - subtitle: Soda Cloud
       page: release-notes/soda-cloud.md
+    - subtitle: Soda Cloud Reporting API
+      page: release-notes/reporting-api.md
+    - subtitle: Soda Core 
+      page: release-notes/soda-core.md

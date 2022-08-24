@@ -1,11 +1,15 @@
 ---
 layout: default
 title: Example tests for unique values
+description: By default, Soda SQL includes a unique_count metric to test data to ensure there are no duplicates or that each value is unique. See a full YAML example.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/examples/examples-test-unique.html
 ---
 
 # Example tests for unique values
+
+{% include banner-sql.md %}
 
 Where your dataset contains records that ought to be unique, such as item identifiers, you may wish to test the data to ensure there are no duplicates or that each value is unique.  
 
@@ -33,7 +37,7 @@ columns:
       - duplicate_count == 0
 ```
 
-Then, the engineer [runs a Soda SQL scan]({% link soda/scan.md %}#run-a-scan-in-soda-sql) as follows:
+Then, the engineer [runs a Soda SQL scan]({% link soda-sql/scan.md %}#run-a-scan-in-soda-sql) as follows:
 
 Scan command:
 
@@ -161,5 +165,3 @@ Scan output:
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

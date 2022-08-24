@@ -1,11 +1,15 @@
 ---
 layout: default
-title: Apply filters
+title: Apply filters in Soda SQL
+description: To test specific portions of data for quality, you can apply dynamic filters when you scan data in your warehouse. Define a filter config key in your scan YAML.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/documentation/filtering.html
 ---
 
-# Apply filters
+# Apply filters in Soda SQL
+
+{% include banner-sql.md %}
 
 To test specific portions of data for quality, you can apply dynamic **filters** when you [scan]({% link soda/glossary.md %}#scan) data in your [warehouse]({% link soda/glossary.md %}#warehouse). To do so, you define a filter [configuration key]({% link soda/glossary.md %}#configuration-key) in your [scan YAML]({% link soda/glossary.md %}#scan-yaml) file, then add a variable to the `soda scan` command that specifies a portion of data for Soda SQL to scan instead of scanning a larger data set. When you add a variable, Soda SQL adds a filter to the `WHERE` clause of the SQL queries it creates to scan your data. Refer to [How Soda SQL works]({% link soda-sql/concepts.md %}) to learn more. 
 
@@ -21,7 +25,6 @@ Similarly, if the table has a column for `COUNTRY`, you can apply a filter that 
 $ soda scan -v country=FRA warehouse.yml tables/customer_transactions.yml
 ```
 
-If you have a Soda Cloud account, you can configure filters in the first step of the guide to **[Create a monitor]({% link soda-cloud/monitors.md %}#1-dataset)**.
 
 ## Configure a filter in Soda SQL
 
@@ -74,15 +77,12 @@ if scan_result.has_test_failures():
 
 ## Go further
 
-* If you have a Soda Cloud account, you can configure filters in the first step of the guide to **[Create a monitor]({% link soda-cloud/monitors.md %}#1-dataset)**.
-* You can overwrite monitor results in Soda Cloud by running a scan in Soda SQL that overwrites the timestamp. See [Overwrite scan output in Soda Cloud ]({% link soda/scan.md %}#overwrite-scan-output-in-soda-cloud)
+* You can overwrite monitor results in Soda Cloud by running a scan in Soda SQL that overwrites the timestamp. See [Overwrite scan output in Soda Cloud ]({% link soda-sql/scan.md %}#overwrite-scan-output-in-soda-cloud)
 * Learn more about configuring your [scan YAML]({% link soda-sql/scan-yaml.md %}) file.
 * Learn more about [how Soda SQL works]({% link soda-sql/concepts.md %}) file.
-* Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
+
 
 <br />
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

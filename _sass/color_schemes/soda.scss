@@ -378,7 +378,7 @@ $code-background-color: #f8f9f9;
 
 .site-nav {
     .nav-list .nav-list-item > .nav-list .nav-list-item .nav-list-link {
-        color: #8B9092;
+        color: #636769;
         font-weight: 500;
         padding-top: 6px;
         padding-bottom: 6px;
@@ -440,17 +440,30 @@ $code-background-color: #f8f9f9;
     }
 }
 
+@media (min-width: 50rem) {
+    /* move search box left */
+    .search .search-input-wrap {
+      right: auto;
+    }
+  
+    /* github iframe margin */
+    .aux-nav-list-item-github-iframe {
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+  }
+
 body {
     //-moz-osx-font-smoothing: grayscale;
     //-webkit-font-smoothing: antialiased; // do not enable these as they lighten the font too much depending on the screen density
     font-weight: 500 !important;
-    color: #8B9092 !important;
+    color: #636769 !important;
 }
 
 b,
 strong {
     font-weight: 600 !important;
-    color: #000;
+    color: #333;
 }
 
 h1,
@@ -522,6 +535,7 @@ body {
 .site-logo {
     max-height: 16px;
 }
+
 
 // for index.md
 .docs-html-content {
@@ -799,3 +813,162 @@ body {
         padding-bottom: 60px !important;
     }
 }
+
+// code tabs
+.warpper{
+    display:flex;
+    flex-direction: column;
+    align-items: left;
+  }
+  .tabs {
+    background-image: linear-gradient(0deg, #0000001e 1px, #00000000 1px);
+  }
+  .tab{
+    cursor: pointer;
+    padding:10px 20px;
+    margin:0px 0px;
+    background:#00D891;
+    display:inline-block;
+    color:#fff;
+    border-radius:3px 3px 0px 0px;
+    border: solid 1px #0000001e;
+  }
+  .panels{
+    background:#fffffff6;
+    border:solid 1px #0000001e;
+    border-top: none;
+    min-height:200px;
+    width:100%;
+    max-width:700px;
+    border-radius:3px;
+    overflow:hidden;
+    padding:20px;  
+  }
+  .panel{
+    display:none;
+    animation: fadein .5s;
+  }
+  @keyframes fadein {
+      from {
+          opacity:0;
+      }
+      to {
+          opacity:1;
+      }
+  }
+  .panel-title{
+    font-size:1.5em;
+    font-weight:bold
+  }
+  .radio{
+    display:none;
+  }
+  #one:checked ~ .panels #one-panel,
+  #two:checked ~ .panels #two-panel,
+  #three:checked ~ .panels #three-panel{
+    display:block
+  }
+  #one:checked ~ .tabs #one-tab,
+  #two:checked ~ .tabs #two-tab,
+  #three:checked ~ .tabs #three-tab{
+    background:#fff;
+    color:#333;
+    border-bottom-color: transparent;
+  
+  }
+  
+/* The alert message box */
+.alert {
+    padding: 20px 20px 20px 75px;
+    background-color: #F5F5F5;
+    color: black;
+    margin-bottom: 15px;
+    position: relative;
+
+    &::before {
+        content: '⚠';
+        position: absolute;
+        left: 20px;
+        top: 33px;
+        color: red;
+        font-size: 40px;
+    }
+
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            color: grey;
+        }
+    }
+}
+
+/* The info message box */
+.info {
+    padding: 20px 20px 20px 20px;
+    background-color: #F5F5F5;
+    color: black;
+    margin-bottom: 15px;
+    position: relative;
+    }
+
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            color: grey;
+        }
+}
+/* Docs announcement banner */
+
+.docs-banner {
+  padding-top: 0;
+}
+
+.docs-banner > a.docs-section-row {
+  display: block;
+  overflow: auto;
+  text-overflow: initial;
+  white-space: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  max-width: none !important;
+}
+.docs-banner-text {
+  display: inline-block;
+  margin-right: 20px;
+}
+.docs-banner-action {
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: underline;
+}
+.docs-banner.docs-color-turquoise {
+  background-color: #00c9d6;
+}
+.docs-banner.docs-color-turquoise .docs-banner-text {
+  color: #000;
+}
+.docs-banner.docs-color-turquoise .docs-banner-action {
+  color: #fff;
+}
+

@@ -1,11 +1,15 @@
 ---
 layout: default
 title: Install Soda SQL
+description: To use Soda SQL, your system must meet requirements. From your command-line interface, execute a pip install command to install Soda SQL.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/getting-started/installation.html
 ---
 
 # Install Soda SQL
+
+{% include banner-sql.md %}
 
 Soda SQL is a command-line interface (CLI) tool that enables you to scan the data in your data source to surface invalid, missing, or unexpected data.
 <br />
@@ -30,6 +34,7 @@ To use Soda SQL, you must have installed the following on your system.
 
 {% include requirements.md %}
 
+
 ## Install
 
 From your command-line interface tool, execute the following command, replacing `soda-sql-athena` with the install package that matches the type of data source you use to store data.
@@ -42,8 +47,8 @@ $ pip install soda-sql-athena
 | ---------------------------- | ------------------ |
 | Amazon Athena                | soda-sql-athena    |
 | Amazon Redshift              | soda-sql-redshift  |
-| Apache Hive                  | soda-sql-hive      |
-| Apache Spark (Experimental)  | soda-sql-spark     |
+| Apache Hive (Experimental)   | soda-sql-hive      |
+| Apache Spark                 | soda-sql-spark     |
 | GCP Big Query                | soda-sql-bigquery  |
 | MS SQL Server (Experimental) | soda-sql-sqlserver |
 | MySQL (Experimental)         | soda-sql-mysql     |
@@ -76,14 +81,12 @@ pip install soda-sql-athena -U
 
 ## Go further
 
-* Next, [configure Soda SQL]({% link soda-sql/5_min_tutorial.md %}) to connect to your warehouse.
+* Next, [configure Soda SQL]({% link soda-sql/quick-start-soda-sql.md %}) to connect to your warehouse.
 * Soda collects anonymous Soda SQL usage statistics. Learn more about the [information]({% link soda-sql/global-configuration.md %}) Soda collects.
 * Learn [How Soda SQL works]({% link soda-sql/concepts.md %}).
-* Need help? Join the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a>.
+
 
 <br />
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.

@@ -2,25 +2,109 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Soda Cloud Reporting API",
-    "description": "\nThis API enables you to query data from your Soda Cloud account. Use the data to build reporting dashboards that\ncommunicate how users in your organization are adopting and making use of Soda Cloud.\n\nAuthentication\n-----\nTo use the API, you must provide a username and password (your Soda Cloud login credentials) according to\nthe `HTTPBasic` security protocol.\n\nTesting\n-----\nYou can test the API using the following methods.\n* Test the API endpoints within the documentation. Provide the authentication credentials, when required,\nin the **Auth** toggle in the testing window embedded in each endpoint's documentation.\n* Test the API using an API testing platform such as Postman. Provide the `Basic Auth` authentication\ncredentials in your chosen testing platform.\n* Test the API using an HTTP request library such as `httpx` in Python, an example of which follows.\n```python\nimport httpx\nrequest_result = httpx.post(\"<endpoint_URL>\", auth=(\"username\", \"password\"))\n```\n",
-    "version": "0.0.0-a2"
+    "description": "\nThis API enables you to query data from your Soda Cloud account. Use the data to build reporting dashboards that\ncommunicate how users in your organization are adopting and making use of Soda Cloud.\n\nAuthentication\n-----\nThe API supports both `HTTPBasic` authentication and `TokenAuth` authentication. Except for the `/get_token` endpoint,\nwhich only supports HTTP Basic authentication.\n\n- `HTTPBasic` authentication requires you to provide a username and password via headers. Each endpoint \"Try It\" section\nwill show you exactly how to do that.\n\n- `TokenAuth` requires that you obtain a Soda token from the `/get_token` endpoint using your username and password\nin accordance with the HTTPBasic Authentication framework. This token has an expiration of 30 minutes. The `/get_token`\nendpoint makes this clear to you (see endpoint documentation below). You can then use this token to authenticate with\nany of the other endpoints.\n\n- `ApiKeyId` and `ApiKeySecret` allow you to use API keys generated in your Cloud Profile. Use this method if\nyour organization is using Single Sign-On (SSO). Provide your API Key Id and API Key Secret in the\n`API_KEY_ID` and `API_KEY_SECRET` headers, respectively. If you do not know how to generate your API Key and Secret\npair follow the\n[Connect Soda Core to Soda Cloud](https://docs.soda.io/soda-core/configure.html#connect-soda-core-to-soda-cloud)\ndocumentation.\n\n\nTesting\n-----\nYou can test the API using the following methods.\n* Test the API endpoints within the documentation. Provide the authentication credentials, when required,\nin the **Auth** toggle in the testing window embedded in each endpoint's documentation.\n* Test the API using an API testing platform such as Postman. Provide the `Basic Auth` authentication\ncredentials in your chosen testing platform.\n* Test the API using an HTTP request library such as `httpx` in Python, an example of which follows.\n```python\nimport httpx\nrequest_result = httpx.post(\"<endpoint_URL>\", auth=(\"username\", \"password\"))\n```\n",
+    "version": "0.3.0"
   },
   "servers": [
     { "url": "https://reporting.cloud.soda.io", "description": "Soda Cloud" }
   ],
   "paths": {
-    "/v0/ping": {
+    "/ping": {
       "get": {
         "tags": ["Status"],
         "summary": "Soda can is open",
         "description": "Ping this endpoint to test whether the Reporting API is live.\nReturns the sound of a Soda can opening along with a 200.",
-        "operationId": "soda_can_is_open_v0_ping_get",
+        "operationId": "soda_can_is_open_ping_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           }
         }
+      }
+    },
+    "/v0/get_token": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Get token",
+        "description": "This enpoint allows you to obtain a limited duration API token to use in any of the other endpoints.\n\nMake a query to this endpoint according to the `HTTPBasic` authentication headers\n(see \"Live testing\" section on the right).\n\nThe expiration limit of the token is given to you in the response.\n\nReturns\n-------\nAn object of type `GetTokenResult`.\n\nFind details about the response objects in the **Schemas** section or by unfurling the response\ndetails.",
+        "operationId": "get_token_v0_get_token_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetTokenResult" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBasic": [] }]
+      }
+    },
+    "/v0/audit_trail": {
+      "get": {
+        "tags": ["Auditing"],
+        "summary": "Audit Trail",
+        "description": "This endpoint returns a list of audit trail events for the authenticated user's organization.\n\nTo obtain data from this endpoint, the authenticated user must be an **organization admin**\nand the data returned is equivalent to the what an Organization admin would be able to get from\nthe Soda Cloud UI under \"Organization Settings > Audit Trail\".\n\nUsage\n-----\nUse this endpoint to capture audit trail events for security and usage monitoring purposes.\n\nReturns\n-------\nAn object of type `AuditTrailResult` containing an array of `AuditTrailData`.\n\nFind details about the response objects in the **Schemas** section or by unfurling the response\ndetails.",
+        "operationId": "audit_trail_v0_audit_trail_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "From Datetime",
+              "type": "string",
+              "format": "date-time",
+              "default": "2022-06-27T10:45:50.944194"
+            },
+            "name": "from_datetime",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "To Datetime",
+              "type": "string",
+              "format": "date-time",
+              "default": "2022-07-28T10:45:50.944227"
+            },
+            "name": "to_datetime",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuditTrailResult" }
+              }
+            }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/adoption/sign_ups": {
@@ -37,9 +121,23 @@
                 "schema": { "$ref": "#/components/schemas/SignUpsResult" }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/adoption/sign_ins": {
@@ -56,9 +154,23 @@
                 "schema": { "$ref": "#/components/schemas/SignInsResult" }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/adoption/daily_account_activity": {
@@ -77,9 +189,23 @@
                 }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/impact/alerts_sent": {
@@ -98,9 +224,23 @@
                 }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/adoption/scans_run": {
@@ -117,9 +257,23 @@
                 "schema": { "$ref": "#/components/schemas/ScansRunResult" }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/coverage/tests": {
@@ -128,6 +282,17 @@
         "summary": "Tests",
         "description": "This endpoint provides a real-time list of all the tests that exist in your organization's account,\nas well as the datasets upon which each test depends.\n\nUsage\n-----\nUse this endpoint to enrich results from the `/datasets` or `/tests_and_results` endpoints.\n\nReturns\n-------\nAn object of type `TestsResult` containing an array of `TestsData` for each test.\n\nFind details about the response objects in the **Schemas** section or by\nunfurling the response details.",
         "operationId": "tests_v0_coverage_tests_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Request Body",
+                "allOf": [{ "$ref": "#/components/schemas/TestsQuery" }],
+                "default": {}
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -136,9 +301,31 @@
                 "schema": { "$ref": "#/components/schemas/TestsResult" }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/coverage/datasets": {
@@ -155,17 +342,42 @@
                 "schema": { "$ref": "#/components/schemas/DatasetsResult" }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/quality/tests_and_results": {
       "post": {
         "tags": ["Quality"],
         "summary": "Test results",
-        "description": "This endpoint provides a list of tests along with each test's historical evaluation results.\n\nUsage\n-----\nUse this endpoint to build reports that show the outcome of your tests over time. If you gathered high-level data\nfrom the `/dataset_health` and `/dataset_coverage` endpoints, you can use this endpoint to examine more granular\ndata about tests that apply to each dataset.\n\nReturns\n-------\nAn object of type `TestsAndResultsResult` containing an array of `TestsAndResultsData`\n\nFind details about the response objects in the **Schemas** section or by\nunfurling the response details.",
+        "description": "This endpoint provides a list of tests along with each test's historical evaluation results.\n\nUsage\n-----\nUse this endpoint to build reports that show the outcome of your tests over time. If you gathered high-level data\nfrom the `/dataset_health` and `/dataset_coverage` endpoints, you can use this endpoint to examine more granular\ndata about tests that apply to each dataset.\n\nBe sure to provide a single `dataset_id` per request, and use the `from_datetime` parameter to optimize performance.\nUse the `datasets` endpoint to first get a list of available datasets along with their IDs, then issue separate\nqueries one dataset at a time.\n\nKeep the number of potentially parallel queries that you make to this endpoint small as they can face rate\nlimitations or poor performance.\n\nReturns\n-------\nAn object of type `TestsAndResultsResult` containing an array of `TestsAndResultsData`\n\nFind details about the response objects in the **Schemas** section or by\nunfurling the response details.",
         "operationId": "test_results_v0_quality_tests_and_results_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Request Body",
+                "allOf": [{ "$ref": "#/components/schemas/TestResultsQuery" }],
+                "default": {}
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -176,17 +388,52 @@
                 }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/quality/dataset_health": {
       "post": {
         "tags": ["Quality"],
         "summary": "Dataset health",
-        "description": "This endpoint provides you with a daily measure of the health of each of your datasets. Soda calculated a dataset's\nhealth based on the number of tests that pass during a scan.\n\nUsage\n-----\nUse this endpoint to get review the health of your datasets, and to see a high-level view of the more granular\ninformation that the `/tests_and_results` endpoint provides.\n\nUse this endpoint in conjunction with the `/datasets` endpoint as the latter adds information about each\ndataset.\n\nReturns\n-------\nAn object of type `DatasetHealthResult` containing an array of `DatasetHealthData`\n\nFind details about the response objects in the **Schemas** section or by\nunfurling the response details.",
+        "description": "This endpoint provides you with a daily measure of the health of each of your datasets. Soda calculated a dataset's\nhealth based on the number of tests that pass during a scan.\n\nUsage\n-----\nUse this endpoint to get review the health of your datasets, and to see a high-level view of the more granular\ninformation that the `/tests_and_results` endpoint provides.\n\nUse this endpoint in conjunction with the `/datasets` endpoint as the latter adds information about each\ndataset.\n\nBe sure to provide a single `dataset_id` per request, and use the `from_datetime` parameter to optimize performance.\n\nUse the datasets endpoint to first get a list of available datasets along with their IDs, then issue separate\nqueries one dataset at a time.\n\nKeep the number of potentially parallel queries that you make to this endpoint small as they can face rate\nlimitations or poor performance.\n\nReturns\n-------\nAn object of type `DatasetHealthResult` containing an array of `DatasetHealthData`\n\nFind details about the response objects in the **Schemas** section or by\nunfurling the response details.",
         "operationId": "dataset_health_v0_quality_dataset_health_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Request Body",
+                "allOf": [
+                  { "$ref": "#/components/schemas/DatasetHealthRequest" }
+                ],
+                "default": { "output_all_dates": false }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -195,9 +442,31 @@
                 "schema": { "$ref": "#/components/schemas/DatasetHealthResult" }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     },
     "/v0/coverage/dataset_coverage": {
@@ -206,6 +475,19 @@
         "summary": "Dataset coverage",
         "description": "This endpoint provides a daily measure of the test coverage of your datasets.\nIt derives a `relative_coverage_score` which compares the number of tests that apply to a single dataset to\nother datasets connected to your organization's Soda Cloud account. (Refer to the `DatasetCoverageData` schema\nfor more information.)\n\nUsage\n-----\nUse this endpoint to review the relative test coverage of your datasets, and to see a high-level view of the more\ngranular information that the `/tests_and_results` endpoint provides.\n\nThis endpoint is best used in conjunction with the `/datasets` endpoint as the latter augments the level of\ninformation about each dataset.\n\nReturns\n-------\nAn object of type `DatasetCoverageResult` containing an array of `DatasetCoverageData`\n\nFind details about the response objects in the **Schemas** section or by\nunfurling the response details.",
         "operationId": "dataset_coverage_v0_coverage_dataset_coverage_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Request Body",
+                "allOf": [
+                  { "$ref": "#/components/schemas/DatasetCoverageQuery" }
+                ],
+                "default": { "include_deleted": false }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -216,14 +498,97 @@
                 }
               }
             }
+          },
+          "202": {
+            "description": "Successful request but no data was returned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NoContentError" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
           }
         },
-        "security": [{ "HTTPBasic": [] }]
+        "security": [
+          { "HTTPBasic": [] },
+          { "SodaBackendToken": [] },
+          { "APIKeyCookie": [] },
+          { "ApiKeyId": [] },
+          { "APIKeySecret": [] }
+        ]
       }
     }
   },
   "components": {
     "schemas": {
+      "AuditTrailData": {
+        "title": "AuditTrailData",
+        "type": "object",
+        "properties": {
+          "correlation_id": {
+            "title": "Correlation Id",
+            "type": "string",
+            "description": "Identifier of a given audited request. Note this column cannot be used as a primary key as it can span over multiple rows."
+          },
+          "eventTime": {
+            "title": "Eventtime",
+            "type": "string",
+            "description": "ISO UTC datetime at which the event happened.",
+            "format": "date-time"
+          },
+          "ipAddress": {
+            "title": "Ipaddress",
+            "type": "string",
+            "description": "IP address of the user who performed the logged action."
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "description": "Email address of the user who performed the logged action."
+          },
+          "apiKey": {
+            "title": "Apikey",
+            "type": "string",
+            "description": "Obfuscated API key of the user who performed the logged action."
+          },
+          "comment": {
+            "title": "Comment",
+            "type": "string",
+            "description": "Explanation of the audited event."
+          },
+          "hash": {
+            "title": "Hash",
+            "type": "string",
+            "description": "A tamper-proof security and verification hash."
+          }
+        },
+        "description": "Contains audited events from the authorized user's organization."
+      },
+      "AuditTrailResult": {
+        "title": "AuditTrailResult",
+        "required": ["data"],
+        "type": "object",
+        "properties": {
+          "resource": {
+            "title": "Resource",
+            "type": "string",
+            "default": "audit_trail"
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AuditTrailData" }
+          }
+        },
+        "description": "Array of `AuditTrailData`."
+      },
       "DailyAccountActivityData": {
         "title": "DailyAccountActivityData",
         "type": "object",
@@ -358,7 +723,11 @@
           },
           "standard_deviation_number_of_tests": {
             "title": "Standard Deviation Number Of Tests",
-            "type": "number",
+            "anyOf": [
+              { "type": "number" },
+              { "type": "string" },
+              { "type": "integer" }
+            ],
             "description": "Standard deviation of the number of tests across all datasets in your organization.",
             "default": 0.0
           },
@@ -370,6 +739,29 @@
           }
         },
         "description": "Contains coverage descriptives across datasets."
+      },
+      "DatasetCoverageQuery": {
+        "title": "DatasetCoverageQuery",
+        "type": "object",
+        "properties": {
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string",
+            "description": "Dataset IDs (UUIDs from the Genie Cloud platform) to use as filter."
+          },
+          "include_deleted": {
+            "title": "Include Deleted",
+            "type": "boolean",
+            "description": "Whether to include deleted datasets or not from the report.",
+            "default": false
+          },
+          "ast_filter": {
+            "title": "Ast Filter",
+            "type": "object",
+            "description": "**Internal purposes only, undocumented**"
+          }
+        },
+        "description": "TODO"
       },
       "DatasetCoverageResult": {
         "title": "DatasetCoverageResult",
@@ -424,9 +816,44 @@
             "title": "Percentage Passing Tests",
             "type": "number",
             "description": "Proportion of tests and monitors that passed."
+          },
+          "percent_change_percentage_passing_tests": {
+            "title": "Percent Change Percentage Passing Tests",
+            "type": "number",
+            "description": "\n        Percentage change of the last data health point compared to a rolling average over the last\n        3\n        "
           }
         },
         "description": "Dataset health information containing counts of passing or failing tests (warning or critical) per scan date."
+      },
+      "DatasetHealthRequest": {
+        "title": "DatasetHealthRequest",
+        "type": "object",
+        "properties": {
+          "dataset_ids": {
+            "title": "Dataset Ids",
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of dataset IDs (UUIDs from the Soda Cloud platform) to use as filter."
+          },
+          "from_datetime": {
+            "title": "From Datetime",
+            "type": "string",
+            "description": "\nISO 8601 datetime to specify the point in time from which you would like to get health historical data.\n",
+            "format": "date-time"
+          },
+          "ast_filter": {
+            "title": "Ast Filter",
+            "type": "object",
+            "description": "**Internal purposes only, undocumented"
+          },
+          "output_all_dates": {
+            "title": "Output All Dates",
+            "type": "boolean",
+            "description": "Set to true to get one record per report date even if no scan results are available for that day.",
+            "default": false
+          }
+        },
+        "description": "Schema for a dataset health request."
       },
       "DatasetHealthResult": {
         "title": "DatasetHealthResult",
@@ -450,11 +877,6 @@
             "title": "Dataset Id",
             "type": "string",
             "description": "\nIdentifier (UUID) of the dataset in Soda Cloud. Join with the results of the `datasets` endpoint for more\ninformation.\n        "
-          },
-          "is_deleted": {
-            "title": "Is Deleted",
-            "type": "boolean",
-            "description": "True if the dataset was deleted; false if the dataset is active."
           },
           "number_of_tests": {
             "title": "Number Of Tests",
@@ -481,7 +903,12 @@
           "dataset_name": {
             "title": "Dataset Name",
             "type": "string",
-            "description": "Name of the dataset in Soda Cloud."
+            "description": "Name of the dataset in Soda Cloud corresponding to the name of the dataset in the data source."
+          },
+          "dataset_label": {
+            "title": "Dataset Label",
+            "type": "string",
+            "description": "Custom name given to a dataset in Soda Cloud. Will often be identical to dataset_name"
           },
           "tags": {
             "title": "Tags",
@@ -489,15 +916,25 @@
             "items": { "type": "string" },
             "description": "User-provided list of tags."
           },
+          "creator_info": {
+            "title": "Creator Info",
+            "allOf": [{ "$ref": "#/components/schemas/UserInfo" }],
+            "description": "User information for the creator of the dataset."
+          },
+          "owner_info": {
+            "title": "Owner Info",
+            "allOf": [{ "$ref": "#/components/schemas/UserInfo" }],
+            "description": "User information for the owner of the dataset."
+          },
+          "number_of_rows": {
+            "title": "Number Of Rows",
+            "anyOf": [{ "type": "integer" }, { "type": "string" }],
+            "description": "Current (and latest known) number of rows in the dataset."
+          },
           "number_of_failed_tests": {
             "title": "Number Of Failed Tests",
-            "type": "integer",
+            "anyOf": [{ "type": "integer" }, { "type": "string" }],
             "description": "Number of tests that failed on a specific dataset."
-          },
-          "is_deleted": {
-            "title": "Is Deleted",
-            "type": "boolean",
-            "description": "True if the dataset was deleted; false if the dataset is active."
           },
           "last_scan_time": {
             "title": "Last Scan Time",
@@ -525,6 +962,68 @@
           }
         },
         "description": "Array of `DatasetsData`."
+      },
+      "GetTokenResult": {
+        "title": "GetTokenResult",
+        "type": "object",
+        "properties": {
+          "user": {
+            "title": "User",
+            "type": "string",
+            "description": "User's username (email addess used at sign up)."
+          },
+          "token": {
+            "title": "Token",
+            "type": "string",
+            "description": "\n            API Token to use for authentication. This token expires. Its expiration is also provided in the response.\n            "
+          },
+          "organization_id": {
+            "title": "Organization Id",
+            "type": "string",
+            "description": "Organization ID (UUID) of the logged in user."
+          },
+          "expires_in": {
+            "title": "Expires In",
+            "type": "integer",
+            "description": "Token's expiration time in seconds."
+          }
+        },
+        "description": "Soda Cloud API token and organisation ID information to use in this API's endpoints."
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ValidationError" }
+          }
+        }
+      },
+      "NoContentError": {
+        "title": "NoContentError",
+        "type": "object",
+        "properties": {
+          "resource": {
+            "title": "Resource",
+            "type": "string",
+            "description": "Name of the resource. Usually the same string as the endpoint."
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "type": "object" },
+            "description": "Generic data payload from the query. Should be overidden with a more specific pydandic model.",
+            "default": []
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string",
+            "default": "No results for the requested data. If you think this is a bug and you should be getting results, get in touch with us."
+          }
+        },
+        "description": "Response Schema of a NoContent Error"
       },
       "ScansRunData": {
         "title": "ScansRunData",
@@ -637,6 +1136,24 @@
         },
         "description": "Array of `SignUpData`"
       },
+      "TestResultsQuery": {
+        "title": "TestResultsQuery",
+        "type": "object",
+        "properties": {
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string",
+            "description": "\nDataset ID (UUID from the Soda Cloud platform). The `datasets` endpoint provides those IDs and can be used\nto loop over this endpoint.\n        "
+          },
+          "from_datetime": {
+            "title": "From Datetime",
+            "type": "string",
+            "description": "\nISO 8601 datetime to specify the point in time from which you would like to get health historical data.\n",
+            "format": "date-time"
+          }
+        },
+        "description": "Schema for Test Results Query"
+      },
       "TestsAndResultsData": {
         "title": "TestsAndResultsData",
         "type": "object",
@@ -668,6 +1185,7 @@
             "items": { "type": "string" },
             "description": "\nList of identifiers (UUID) of the datasets in Soda Cloud.\nJoin with the results from the `datasets` endpoint for more information.\n        "
           },
+          "dataset_id": { "title": "Dataset Id", "type": "string" },
           "test_creator_info": {
             "title": "Test Creator Info",
             "allOf": [{ "$ref": "#/components/schemas/UserInfo" }],
@@ -746,6 +1264,7 @@
             "items": { "type": "string" },
             "description": "\nList of identifiers (UUID) of the datasets in Soda Cloud.\nJoin with the results from the `datasets` endpoint for more information.\n        "
           },
+          "dataset_id": { "title": "Dataset Id", "type": "string" },
           "test_creator_info": {
             "title": "Test Creator Info",
             "allOf": [{ "$ref": "#/components/schemas/UserInfo" }],
@@ -758,6 +1277,18 @@
           }
         },
         "description": "Contains information about a test and its associated datasets."
+      },
+      "TestsQuery": {
+        "title": "TestsQuery",
+        "type": "object",
+        "properties": {
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string",
+            "description": "Dataset IDs (UUIDs from the Genie Cloud platform) to use as filter."
+          }
+        },
+        "description": "Schema for Tests Query"
       },
       "TestsResult": {
         "title": "TestsResult",
@@ -818,8 +1349,36 @@
           }
         },
         "description": "User information data."
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": ["loc", "msg", "type"],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "msg": { "title": "Message", "type": "string" },
+          "type": { "title": "Error Type", "type": "string" }
+        }
       }
     },
-    "securitySchemes": { "HTTPBasic": { "type": "http", "scheme": "basic" } }
+    "securitySchemes": {
+      "HTTPBasic": { "type": "http", "scheme": "basic" },
+      "SodaBackendToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "SODA_TOKEN"
+      },
+      "APIKeyCookie": { "type": "apiKey", "in": "cookie", "name": "token" },
+      "ApiKeyId": { "type": "apiKey", "in": "header", "name": "API_KEY_ID" },
+      "APIKeySecret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "API_KEY_SECRET"
+      }
+    }
   }
 }

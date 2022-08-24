@@ -1,11 +1,15 @@
 ---
 layout: default
 title: Example tests for valid values
+description: Where your dataset contains records that ought to contain only values that qualify as valid, you can use Soda SQL to test for data validity. See a full example.
+sidebar: sql
 parent: Soda SQL
 redirect_from: /soda-sql/examples/examples-test-valid.html
 ---
 
 # Example tests for valid values
+
+{% include banner-sql.md %}
 
 Where your dataset contains records that ought to contain only values that qualify as valid, you can use Soda SQL to test for data validity. 
 
@@ -31,7 +35,7 @@ columns:
       - invalid_percentage == 0
 ```
 
-Then, the engineer [runs a Soda SQL scan]({% link soda/scan.md %}#run-a-scan-in-soda-sql) as follows:
+Then, the engineer [runs a Soda SQL scan]({% link soda-sql/scan.md %}#run-a-scan-in-soda-sql) as follows:
 
 Scan command:
 
@@ -71,7 +75,7 @@ Scan output, fail:
 <br />
 <br />
 
-Another way to test data for validity is to use the `valid_format` column configuration key. The data engineer can identify valid data using the `valid_format` column configuration key on the text column that contains customer_id values. The test ensures that all customer identifiers are in `uuid` format. (Note that `valid_format` only works with columns using [data type]({% link soda/supported-data-types.md %}) TEXT, *not* date or number.)
+Another way to test data for validity is to use the `valid_format` column configuration key. The data engineer can identify valid data using the `valid_format` column configuration key on the text column that contains customer_id values. The test ensures that all customer identifiers are in `uuid` format. (Note that `valid_format` only works with columns using [data type]({% link soda-sql/supported-data-types.md %}) TEXT, *not* date or number.)
 
 Scan YAML:
 
@@ -90,7 +94,7 @@ columns:
       - valid_percentage == 100
 ```
 
-Then, the engineer [runs a Soda SQL scan]({% link soda/scan.md %}#run-a-scan-in-soda-sql) as follows:
+Then, the engineer [runs a Soda SQL scan]({% link soda-sql/scan.md %}#run-a-scan-in-soda-sql) as follows:
 
 Scan command:
 
@@ -115,5 +119,3 @@ Scan output:
 
 ---
 *Last modified on {% last_modified_at %}*
-
-Was this documentation helpful? <br /> Give us your feedback in the **#soda-docs** channel in the <a href="http://community.soda.io/slack" target="_blank"> Soda community on Slack</a> or <a href="https://github.com/sodadata/docs/issues/new" target="_blank">open an issue</a> in GitHub.
